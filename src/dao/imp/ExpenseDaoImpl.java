@@ -4,8 +4,11 @@ import config.JdbcConfig;
 import dao.ExpenseDao;
 import dao.dto.ExpenseDto;
 import entities.Expense;
+
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ExpenseDaoImpl implements ExpenseDao {
@@ -28,6 +31,25 @@ public class ExpenseDaoImpl implements ExpenseDao {
             preparedStatement.setString(2, expenseDto.getCategory().getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void getExpenses(){
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM expense");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                System.out.println("Gasto Nº " + rs.getInt("id"));
+                System.out.println(("Monto: " + rs.getDouble("amount")));
+                System.out.println("Categoria: " + rs.getString("category"));
+                System.out.println("Fecha: " + rs.getString("date_added"));
+                System.out.println("-----------------------------------------------------");
+            }
+            rs.close();
+            preparedStatement.close();
+            connection.close();
+        }catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

@@ -22,7 +22,6 @@ public class Main {
         int option = 0;
         double amount = 0;
         List<ExpenseDto> expenses = new ArrayList<>();
-        Map<String, Integer> countCategoryMap = new HashMap<>();
         boolean done = false;
         boolean exit = false;
         boolean invalid = true;
@@ -72,8 +71,6 @@ public class Main {
                         String name = scanner.nextLine().toLowerCase().trim();
                         category.setName(name);
 
-                        countCategoryMap.put(name, countCategoryMap.getOrDefault(name, 0) + 1);
-
                         expense.setId(counter);
                         expense.setAmount(amount);
                         expense.setCategory(category);
@@ -89,6 +86,7 @@ public class Main {
                     }
                     break;
                 case 2:
+                    expenseDao.getExpenses();
                     break;
                 case 3:
                     exit = true;
