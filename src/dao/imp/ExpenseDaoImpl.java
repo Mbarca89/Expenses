@@ -35,6 +35,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
         }
     }
 
+    @Override
     public void getExpenses(){
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM expense");
@@ -51,6 +52,41 @@ public class ExpenseDaoImpl implements ExpenseDao {
             connection.close();
         }catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public ResultSet getExpenseById(int id){
+        ResultSet rs = null;
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM expense WHERE id = ?");
+            preparedStatement.setInt(1,id);
+            rs = preparedStatement.executeQuery();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rs;
+    }
+
+    @Override
+    public void updateExpense(int id, String newCategory, Double newAmount){
+        try{
+           PreparedStatement preparedStatement = connection.prepareStatement("UPDATE expense SET category = ?, amount = ? WHERE id = ?");
+           preparedStatement.setString(1, newCategory);
+           preparedStatement.setDouble(2, newAmount);
+           preparedStatement.setInt(3,id);
+
+           int filesAffected = preparedStatement.executeUpdate();
+
+           if (filesAffected > 0){
+               System.out.println("Actualización correcta");
+           } else {
+               System.out.println("No se encontró el gasto con id " + id);
+           }
+
+           preparedStatement.close();
+        }catch (SQLException e){
+            System.out.println("Error al actualizar el registro: " + e.getMessage());
         }
     }
 }
