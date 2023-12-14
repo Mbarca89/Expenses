@@ -87,9 +87,8 @@ public class ExpenseDaoImpl implements ExpenseDao {
     }
     @Override
     public void deleteExpense(int id){
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement("DELETE expense WHERE id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE expense WHERE id = ?");
             preparedStatement.setInt(1, id);
 
             int filesAffected = preparedStatement.executeUpdate();
