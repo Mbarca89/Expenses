@@ -74,7 +74,6 @@ public class ExpenseDaoImpl implements ExpenseDao {
            preparedStatement.setInt(3,id);
 
            int filesAffected = preparedStatement.executeUpdate();
-
            if (filesAffected > 0){
                System.out.println("Actualización correcta");
            } else {
@@ -85,5 +84,26 @@ public class ExpenseDaoImpl implements ExpenseDao {
         }catch (SQLException e){
             System.out.println("Error al actualizar el registro: " + e.getMessage());
         }
+    }
+    @Override
+    public void deleteExpense(int id){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("DELETE expense WHERE id = ?");
+            preparedStatement.setInt(1, id);
+
+            int filesAffected = preparedStatement.executeUpdate();
+            if (filesAffected > 0){
+                System.out.println("Eliminado correctamente!");
+            } else {
+                System.out.println("No se encontró el gasto con id " + id);
+            }
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar el registro: " + e.getMessage());
+        }
+
+
     }
 }

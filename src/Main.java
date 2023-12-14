@@ -125,6 +125,14 @@ public class Main {
                     }
                     break;
                 case 4:
+                    System.out.println("Ingrese el ID del gasto a eliminar: ");
+                    try{
+                        int id = scanner.nextInt();
+                        scanner.nextLine();
+                        expenseDao.deleteExpense(id);
+                    }catch (RuntimeException e){
+                        System.out.println("Error: " + e.getMessage());
+                    }
                     break;
                 case 5:
                     exit = true;

@@ -11,4 +11,5 @@ public interface ExpenseDao {
     void getExpenses();
     ResultSet getExpenseById(int id);
     void updateExpense(int id, String newCategory, Double newAmount);
+    void deleteExpense (int id);
 }
