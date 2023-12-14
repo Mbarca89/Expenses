@@ -4,8 +4,6 @@ import config.JdbcConfig;
 import dao.ExpenseDao;
 import dao.dto.ExpenseDto;
 import entities.Expense;
-
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,7 +47,6 @@ public class ExpenseDaoImpl implements ExpenseDao {
             }
             rs.close();
             preparedStatement.close();
-            connection.close();
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +54,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
 
     @Override
     public ResultSet getExpenseById(int id){
-        ResultSet rs = null;
+        ResultSet rs;
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM expense WHERE id = ?");
             preparedStatement.setInt(1,id);

@@ -5,7 +5,6 @@ import entities.ExpenseCategory;
 import exceptions.InvalidExpenseException;
 import interfaces.ExpenseAmountValidator;
 import interfaces.ExpenseAmountValidatorImpl;
-import utilities.Utilities;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,19 +12,17 @@ import java.util.*;
 
 public class Main {
 
-    public static int counter = 1;
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
         ExpenseAmountValidator expenseAmountValidator = new ExpenseAmountValidatorImpl();
         ExpenseDao expenseDao = new ExpenseDaoImpl();
 
-        int option = 0;
+        int option;
         double amount = 0;
         boolean done = false;
         boolean exit = false;
-        boolean invalid = true;
+        boolean invalid;
 
 
         while(!exit){
@@ -82,6 +79,7 @@ public class Main {
                         System.out.println("Desea ingresar otro gasto? S/N");
                         done = !Objects.equals(scanner.nextLine().toLowerCase(), "s");
                     }
+                   done = false;
                     break;
                 case 2:
                     try{
@@ -92,7 +90,7 @@ public class Main {
                     break;
                 case 3:
                     String newCategory;
-                    Double newAmount;
+                    double newAmount;
                     System.out.println("Ingrese el ID del gasto a modificar: ");
                     try{
                         int id = scanner.nextInt();
@@ -132,17 +130,10 @@ public class Main {
                     exit = true;
                     break;
                 default:
-                    System.out.println("Opción no válida. ingrese una opción: ");
-                    try {
-                        scanner.nextInt();
-                    } catch (java.util.InputMismatchException e) {
-                        System.out.println("Opción no válida. ingrese una opción: ");
-                        scanner.nextLine();
-                        option = scanner.nextInt();
-                    }
+                    System.out.println("Opción no válida.");
+                    break;
             }
         }
-
                 System.out.println("Gracias, vuelva prontos!");
         }
     }
