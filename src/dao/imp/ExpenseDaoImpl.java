@@ -11,11 +11,12 @@ import java.sql.SQLException;
 
 public class ExpenseDaoImpl implements ExpenseDao {
 
-    public ExpenseDaoImpl() {
-        this.connection = JdbcConfig.getDBConnection();
+    private final Connection connection;
+
+    public ExpenseDaoImpl(Connection connection) {
+        this.connection = connection;
     }
 
-    private final Connection connection;
     @Override
     public void createExpense(ExpenseDto expenseDto) {
         try {
